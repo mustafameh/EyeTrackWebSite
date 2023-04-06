@@ -12,8 +12,6 @@ window.addEventListener("load", () => {
 
   const sampleInterval = 500;
 
-
-
   startCalibration.addEventListener("click", () => {
     webgazer.showVideoPreview(true).showPredictionPoints(true);
     startTracking.removeAttribute("disabled");
