@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eye Tracking</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://webgazer.cs.brown.edu/webgazer.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="buttons">
+            <button id="begin-tracking">Begin Tracking</button>
+            <button id="begin-recording">Begin Recording</button>
+            <button id="toggle-video-preview">Toggle Video Preview</button>
+            <button id="pause-tracking">Pause Tracking</button>
+            <button id="resume-tracking">Resume Tracking</button>
+            <button id="save">Save</button>
+        </div>
+        <div class="info">
+            <div id="timestamp" class="timestamp"></div>
+            <div id="coordinates" class="coordinates"></div>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
+

@@ -11,6 +11,13 @@ window.addEventListener("load", () => {
   let initialTimestamp = null;
 
   const sampleInterval = 500;
+  const toggleVideo = document.getElementById("toggleVideo");
+
+  let videoVisible = true;
+  toggleVideo.addEventListener("click", () => {
+    videoVisible = !videoVisible;
+    webgazer.showVideoPreview(videoVisible);
+  });
 
   startCalibration.addEventListener("click", () => {
     webgazer.showVideoPreview(true).showPredictionPoints(true);
