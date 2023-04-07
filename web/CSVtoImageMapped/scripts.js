@@ -68,7 +68,10 @@ function processCSV(csvFile) {
         renderImage(data, "eye-tracking-canvas-original");
 
         // Apply the exponential moving average filter to the data
-        const smoothedData = applyExponentialMovingAverage(data, 0.3);
+        const smoothingLevelSelect = document.getElementById("smoothing-level");
+        const smoothingLevel = parseFloat(smoothingLevelSelect.value);
+        
+        const smoothedData = applyExponentialMovingAverage(data, smoothingLevel);
 
         // Render the smoothed image
         renderImage(smoothedData, "eye-tracking-canvas-smooth");
@@ -86,5 +89,28 @@ fileInput.addEventListener("change", (event) => {
 document.getElementById("record-eye-tracking").addEventListener("click", function () {
     window.location.href = "C:/Users/786me/Desktop/WebGaze/EyeTrackingWebsite/EyeTrackWebSite/web/V2/main.html";
 });
+
+function updateSmoothedImage() {
+    const smoothingLevelSelect = document.getElementById("smoothing-level");
+    const smoothingLevel = parseFloat(smoothingLevelSelect.value);
+
+    // Re-process the CSV file with the new smoothing level
+    if (fileInput.files.length > 0) {
+        const csvFile = fileInput.files[0];
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const data = parseCSV(event.target.result);
+
+            // Apply the exponential moving average filter to the data
+            const smoothedData = applyExponentialMovingAverage(data, smoothingLevel);
+
+            // Render the smoothed image
+            renderImage(smoothedData, "eye-tracking-canvas-smooth");
+        };
+        reader.readAsText(csvFile);
+    }
+}
+
+document.getElementById("apply-smoothing").addEventListener("click", updateSmoothedImage);
 
 

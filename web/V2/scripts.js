@@ -29,6 +29,8 @@ function initializeWebgazer() {
         if (recording) {
             recordedData.push({x, y, time: currentTime});
         }
+
+        
     }).begin();
 }
 
@@ -55,7 +57,6 @@ beginRecording.addEventListener("click", () => {
     if (!recording) {
         recording = true;
         startTime = parseFloat((Date.now() / 1000).toFixed(3));
-        //currentTime = startTime;
         recordedData = [];
         beginRecording.textContent = "Stop Recording";
     } else {
@@ -84,6 +85,26 @@ save.addEventListener("click", () => {
     downloadCSV();
 });
 
+const applyModel = document.getElementById("apply-model");
+const regressionModelDropdown = document.getElementById("regression-model");
+
+function setRegressionModel(model) {
+    switch (model) {
+      case "ridge":
+        webgazer.setRegression("ridge");
+        break;
+      case "weightedRidge":
+        webgazer.setRegression("weightedRidge");
+        break;
+      default:
+        console.error("Unknown regression model:", model);
+    }
+  }
+
+applyModel.addEventListener("click", () => {
+  const selectedModel = regressionModelDropdown.value;
+  setRegressionModel(selectedModel);
+});
 
 
    

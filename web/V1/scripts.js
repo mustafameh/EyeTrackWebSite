@@ -1,105 +1,92 @@
-window.addEventListener("load", () => {
-  const target = document.getElementById("target");
-  const startCalibration = document.getElementById("startCalibration");
-  const startTracking = document.getElementById("startTracking");
-  const pause = document.getElementById("pause");
-  const resume = document.getElementById("resume");
-  const saveData = document.getElementById("saveData");
+const beginTracking = document.getElementById("begin-tracking");
+const beginRecording = document.getElementById("begin-recording");
+const toggleVideoPreview = document.getElementById("toggle-video-preview");
+const pauseTracking = document.getElementById("pause-tracking");
+const resumeTracking = document.getElementById("resume-tracking");
+const save = document.getElementById("save");
+const timestamp = document.getElementById("timestamp");
+const coordinates = document.getElementById("coordinates");
 
-  let isTracking = false;
-  let trackingData = [];
-  let initialTimestamp = null;
+let recording = false;
+let startTime = 0;
+let baseTime = 0;
+let recordedData = [];
 
-  const sampleInterval = 500;
-  const toggleVideo = document.getElementById("toggleVideo");
+function initializeWebgazer() {
+    webgazer.setGazeListener((data, elapsedTime) => {
+        if (data == null) {
+            return;
+        }
 
-  let videoVisible = true;
-  toggleVideo.addEventListener("click", () => {
-    videoVisible = !videoVisible;
-    webgazer.showVideoPreview(videoVisible);
-  });
+        const x = data.x;
+        const y = data.y;
 
-  startCalibration.addEventListener("click", () => {
-    webgazer.showVideoPreview(true).showPredictionPoints(true);
-    startTracking.removeAttribute("disabled");
-    startCalibration.setAttribute("disabled", "true");
-  });
+        const currentTime = elapsedTime / 1000;
 
-  startTracking.addEventListener("click", () => {
-    isTracking = true;
-    initialTimestamp = null;
-    startTracking.setAttribute("disabled", "true");
-    pause.removeAttribute("disabled");
-    saveData.removeAttribute("disabled");
-  });
+        coordinates.innerText = `X: ${x.toFixed(2)}, Y: ${y.toFixed(2)}`;
+        timestamp.innerText = `Time: ${currentTime.toFixed(3)} s`;
 
-  pause.addEventListener("click", () => {
-    webgazer.pause();
-    pause.setAttribute("disabled", "true");
-    resume.removeAttribute("disabled");
-  });
+        if (recording) {
+            recordedData.push({x, y, time: currentTime});
+        }
+    }).begin();
+}
 
-  resume.addEventListener("click", () => {
-    webgazer.resume();
-    pause.removeAttribute("disabled");
-    resume.setAttribute("disabled", "true");
-  });
+function downloadCSV() {
+    const header = "x,y,time\n";
+    let csvContent = recordedData.map(e => `${e.x},${e.y},${e.time}`).join("\n");
+    let blob = new Blob([header + csvContent], {type: "text/csv"});
+    let url = URL.createObjectURL(blob);
 
-  saveData.addEventListener("click", () => {
-    if (trackingData.length > 0) {
-      downloadTrackingData(trackingData, "tracking-data.csv");
-    }
-  });
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "eye_tracking_data.csv";
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 
-  webgazer.setGazeListener((data, elapsedTime) => {
-    if (!isTracking || data == null) return;
-    if (initialTimestamp === null) {
-      initialTimestamp = elapsedTime;
-      lastSampleTime = elapsedTime;
-    }
-    const adjustedTimestamp = elapsedTime - initialTimestamp;
-    const x = data.x;
-    const y = data.y;
-  
-    // Update the displayed coordinates and timestamp
-    document.getElementById("xCoord").textContent = x.toFixed(2);
-    document.getElementById("yCoord").textContent = y.toFixed(2);
-    document.getElementById("timestamp").textContent = adjustedTimestamp.toFixed(2);
-  
-    // Save data every 1000ms
-    if (elapsedTime - lastSampleTime >= sampleInterval) {
-      target.style.left = `${x - target.offsetWidth / 2}px`;
-      target.style.top = `${y - target.offsetHeight / 2}px`;
-      trackingData.push({ x, y, timestamp: adjustedTimestamp });
-      lastSampleTime = elapsedTime;
-    }
-  }).begin();
-
-
-  window.addEventListener("beforeunload", () => {
-    webgazer.end();
-  });
+beginTracking.addEventListener("click", () => {
+    initializeWebgazer();
 });
 
-function downloadTrackingData(data, filename) {
-  const csvContent = convertToCSV(data);
-  const blob = new Blob([csvContent], { type: "text/csv" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  link.click();
-  URL.revokeObjectURL(url);
-}
+beginRecording.addEventListener("click", () => {
+    if (!recording) {
+        recording = true;
+        startTime = parseFloat((Date.now() / 1000).toFixed(3));
+        //currentTime = startTime;
+        recordedData = [];
+        beginRecording.textContent = "Stop Recording";
+    } else {
+        recording = false;
+        beginRecording.textContent = "Begin Recording";
+    }
+});
 
-function convertToCSV(data) {
-  const headers = ["x", "y", "timestamp"];
-  const csvRows = [headers.join(",")];
+toggleVideoPreview.addEventListener("click", () => {
+    const video = document.querySelector("video");
+    video.style.display = video.style.display === "none" ? "" : "none";
+});
 
-  for (const row of data) {
-    csvRows.push(`${row.x},${row.y},${row.timestamp}`);
-  }
+pauseTracking.addEventListener("click", () => {
+    webgazer.pause();
+});
 
-  return csvRows.join("\n");
-}
+resumeTracking.addEventListener("click", () => {
+    webgazer.resume();
+});
+
+save.addEventListener("click", () => {
+    if (recording) {
+        beginRecording.click();
+    }
+    downloadCSV();
+});
+
+
+
+   
+
+
 

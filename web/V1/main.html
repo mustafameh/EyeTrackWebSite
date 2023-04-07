@@ -8,41 +8,21 @@
     <script src="https://webgazer.cs.brown.edu/webgazer.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Webcam EyeTracking Webapp</h1>
-        <a href="web/CSVtoImageMapped/index.html" id="visualize-data">Visualize data</a>
-    </header>
     <div class="container">
-        <div class="button-group">
-            <button id="begin-tracking">Begin Tracking</button>            
+        <div class="buttons">
+            <button id="begin-tracking">Begin Tracking</button>
             <button id="begin-recording">Begin Recording</button>
             <button id="toggle-video-preview">Toggle Video Preview</button>
-        </div>
-        <div class="button-group">
             <button id="pause-tracking">Pause Tracking</button>
             <button id="resume-tracking">Resume Tracking</button>
-        </div>
-        <div class="button-group">
             <button id="save">Save</button>
         </div>
-        <div class="model-selection">
-            <select id="regression-model">
-                <option value="ridge">Ridge Regression</option>
-                <option value="weightedRidge">Weighted Ridge Regression</option>
-            </select>
-            <button id="apply-model">Apply</button>
-        </div>
-
         <div class="info">
             <div id="timestamp" class="timestamp"></div>
             <div id="coordinates" class="coordinates"></div>
         </div>
     </div>
-    <footer>
-        Designed by Mustafa Mehmood, April 2023
-    </footer>
     <script src="scripts.js"></script>
 </body>
 </html>
-
 
