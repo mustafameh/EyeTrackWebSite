@@ -4,24 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eye Tracking Visualization</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="file-input-container">
-            <label for="file-input">Upload CSV File:</label>
-            <input type="file" id="file-input" accept=".csv">
+    <header>
+        <h1>Eye Tracking Visualizer</h1>
+    </header>
+    <main>
+        <div class="container">
+            <div class="file-input-container">
+                <label for="file-input">Upload CSV File:</label>
+                <input type="file" id="file-input" accept=".csv">
+            </div>
+            <div class="canvas-container">
+                <h3>Original</h3>
+                <canvas id="eye-tracking-canvas-original" width="1920" height="1080"></canvas>
+            </div>
+            <div class="canvas-container">
+                <h3>Smoothed</h3>
+                <canvas id="eye-tracking-canvas-smooth" width="1920" height="1080"></canvas>
+            </div>
         </div>
-        <div class="canvas-container">
-            <h3>Original</h3>
-            <canvas id="eye-tracking-canvas-original"></canvas>
-        </div>
-        <div class="canvas-container">
-            <h3>Smoothed</h3>
-            <canvas id="eye-tracking-canvas-smoothed"></canvas>
-        </div>
-    </div>
+    </main>
     <script src="scripts.js"></script>
 </body>
 </html>
+
 

@@ -71,7 +71,7 @@ function processCSV(csvFile) {
         const smoothedData = applyExponentialMovingAverage(data, 0.3);
 
         // Render the smoothed image
-        renderImage(smoothedData, "eye-tracking-canvas-smoothed");
+        renderImage(smoothedData, "eye-tracking-canvas-smooth");
     };
     reader.readAsText(csvFile);
 }
