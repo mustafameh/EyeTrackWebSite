@@ -83,3 +83,8 @@ fileInput.addEventListener("change", (event) => {
     processCSV(csvFile);
 });
 
+document.getElementById("record-eye-tracking").addEventListener("click", function () {
+    window.location.href = "C:/Users/786me/Desktop/WebGaze/EyeTrackingWebsite/EyeTrackWebSite/web/V2/main.html";
+});
+
+

@@ -1,66 +1,121 @@
-/* General styles */
-* {
-    box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #f0f0f0;
+    background-image: url('https://wallpapercave.com/wp/wp3205253.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #eeeeee;
     margin: 0;
     padding: 0;
 }
-
-header {
-    background-color: #4CAF50;
-    padding: 1rem;
-    text-align: center;
-}
-
-h1 {
-    color: #ffffff;
-    margin: 0;
-    font-weight: 500;
-}
-
-main {
-    padding: 1rem;
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: inherit;
+    filter: blur(4px);
+    z-index: -1;
 }
 
 .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     max-width: 1200px;
     margin: 0 auto;
 }
 
+.header {
+    width: 100%;
+    background-color: #393e46;
+    padding: 1rem 0;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
 .file-input-container {
-    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
 }
 
-/* Input field styles */
-input[type="file"] {
-    font-family: 'Roboto', sans-serif;
-    padding: 0.5rem 1rem;
-    background-color: #4CAF50;
+.file-input-container label {
+    font-size: 1.2rem;
     color: #ffffff;
-    border: none;
-    cursor: pointer;
 }
 
-/* Canvas container styles */
+input[type="file"] {
+    margin-top: 1rem;
+}
+
 .canvas-container {
-    display: inline-block;
-    background-color: #222222;
-    border: 3px solid #4CAF50;
-    border-radius: 5px;
-    padding: 1rem;
-    margin: 0 0.5rem 1rem 0.5rem;
-}
-
-h3 {
-    color: #4CAF50;
-    font-weight: 500;
-    margin: 0 0 0.5rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
 }
 
 canvas {
-    display: block;
+    border: 3px solid #00adb5;
+    margin-top: 1rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: #eeeeee;
+}
+
+a {
+    color: #00adb5;
+    font-size: 1.2rem;
+    text-decoration: none;
+    margin-bottom: 2rem;
+}
+
+.footer {
+    font-size: 1rem;
+    color: #eeeeee;
+    margin-bottom: 1rem;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+h1 {
+    font-size: 3rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    margin: 0;
+}
+
+button#record-eye-tracking {
+    background-color: #4caf50;
+    color: #ffffff;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+button#record-eye-tracking:hover {
+    background-color: #3e8e41;
 }

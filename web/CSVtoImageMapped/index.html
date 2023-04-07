@@ -8,25 +8,33 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    
     <header>
         <h1>Eye Tracking Visualizer</h1>
+        <button id="record-eye-tracking" type="button">Record EyeTracking</button>
+        
+
     </header>
     <main>
         <div class="container">
             <div class="file-input-container">
-                <label for="file-input">Upload CSV File:</label>
+                <label for="file-input"><h2>Upload CSV File:<h2></h3></label>
                 <input type="file" id="file-input" accept=".csv">
             </div>
             <div class="canvas-container">
                 <h3>Original</h3>
-                <canvas id="eye-tracking-canvas-original" width="1920" height="1080"></canvas>
+                <canvas id="eye-tracking-canvas-original" width="1920" height="1280"></canvas>
             </div>
             <div class="canvas-container">
                 <h3>Smoothed</h3>
-                <canvas id="eye-tracking-canvas-smooth" width="1920" height="1080"></canvas>
+                <canvas id="eye-tracking-canvas-smooth" width="1920" height="1280"></canvas>
             </div>
+            
         </div>
     </main>
+    <footer>
+        <p>Made by Mustafa Mehmood FYP Diagnosing Mental Diseases with Eye Tracking</p>
+    </footer>
     <script src="scripts.js"></script>
 </body>
 </html>
