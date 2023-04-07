@@ -24,7 +24,7 @@ function initializeWebgazer() {
         const currentTime = elapsedTime / 1000;
 
         coordinates.innerText = `X: ${x.toFixed(2)}, Y: ${y.toFixed(2)}`;
-        timestamp.innerText = `Time: ${currentTime} s`;
+        timestamp.innerText = `Time: ${currentTime.toFixed(3)} s`;
 
         if (recording) {
             recordedData.push({x, y, time: currentTime});

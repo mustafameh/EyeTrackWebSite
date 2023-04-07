@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eye Tracking Visualization</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="file-input-container">
+            <label for="file-input">Upload CSV File:</label>
+            <input type="file" id="file-input" accept=".csv">
+        </div>
+        <div class="canvas-container">
+            <h3>Original</h3>
+            <canvas id="eye-tracking-canvas-original"></canvas>
+        </div>
+        <div class="canvas-container">
+            <h3>Smoothed</h3>
+            <canvas id="eye-tracking-canvas-smoothed"></canvas>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
+
