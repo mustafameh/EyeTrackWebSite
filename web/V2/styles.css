@@ -97,4 +97,26 @@ footer {
     font-size: 14px;
 }
 
+.slider-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.slider-container label {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-right: 0.5rem;
+}
+
+.slider-container input[type="range"] {
+    width: 50%;
+    margin-right: 0.5rem;
+}
+
+.slider-container #interval-display {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-right: 0.5rem;
+}
 

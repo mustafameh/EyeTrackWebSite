@@ -13,6 +13,7 @@ let baseTime = 0;
 let recordedData = [];
 
 let lastRecordedTime = 0;
+let samplingInterval = 1000;
 
 function initializeWebgazer() {
     webgazer.setGazeListener((data, elapsedTime) => {
@@ -28,14 +29,24 @@ function initializeWebgazer() {
         coordinates.innerText = `X: ${x.toFixed(2)}, Y: ${y.toFixed(2)}`;
         timestamp.innerText = `Time: ${currentTime.toFixed(3)} s`;
 
-        if (recording && (currentTime - lastRecordedTime >= 1)) {
+        if (recording && (currentTime - lastRecordedTime >= samplingInterval / 1000)) {
             recordedData.push({x, y, time: currentTime});
             lastRecordedTime = currentTime;
         }
-
         
     }).begin();
 }
+const samplingIntervalInput = document.getElementById("sampling-interval");
+const intervalDisplay = document.getElementById("interval-display");
+const applySamplingIntervalButton = document.getElementById("apply-sampling-interval");
+
+samplingIntervalInput.addEventListener("input", () => {
+    intervalDisplay.textContent = samplingIntervalInput.value;
+});
+
+applySamplingIntervalButton.addEventListener("click", () => {
+    samplingInterval = parseInt(samplingIntervalInput.value);
+});
 
 function downloadCSV() {
     const header = "x,y,time\n";

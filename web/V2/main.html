@@ -19,6 +19,12 @@
             <button id="begin-tracking">Begin Tracking</button>            
             <button id="begin-recording">Begin Recording</button>
             <button id="toggle-video-preview">Toggle Video Preview</button>
+            <div class="slider-container">
+                <label for="sampling-interval">Sampling Minimum Delay (ms): </label>
+                <input type="range" id="sampling-interval" min="50" max="5000" step="50" value="1000">
+                <span id="interval-display">1000</span>
+                <button id="apply-sampling-interval">Apply</button>
+            </div>
         </div>
         <div class="button-group">
             <button id="pause-tracking">Pause Tracking</button>
