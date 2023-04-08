@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 body {
-    font-family: 'Roboto', sans-serif;
-    background-image: url('https://wallpapercave.com/wp/wp3205253.png');
-    background-size: cover;
+    display: flex;
+    color: rgb(165, 158, 158);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: url('https://image.freepik.com/free-vector/dark-purple-seamless-geometric-pattern_278395-310.jpg');
+    background-size: 67% 67%;
     background-position: center;
-    background-repeat: no-repeat;
     background-attachment: fixed;
-    color: #eeeeee;
-    margin: 0;
-    padding: 0;
 }
 body::before {
     content: '';
@@ -19,7 +19,7 @@ body::before {
     right: 0;
     bottom: 0;
     background-image: inherit;
-    filter: blur(4px);
+    filter: blur(10px);
     z-index: -1;
 }
 
@@ -89,7 +89,7 @@ a {
 }
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 1rem 2rem;
     background-color: rgba(0, 0, 0, 0.5);
@@ -101,6 +101,11 @@ h1 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
     margin: 0;
+}
+
+.header-button {
+    display: flex;
+    margin-left: auto;
 }
 
 button#record-eye-tracking {

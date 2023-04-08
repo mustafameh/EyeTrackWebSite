@@ -106,6 +106,9 @@ applyModel.addEventListener("click", () => {
   setRegressionModel(selectedModel);
 });
 
+document.getElementById("visualize-data").addEventListener("click", function () {
+    window.location.href = "file:///C:/Users/786me/Desktop/WebGaze/EyeTrackingWebsite/EyeTrackWebSite/web/CSVtoImageMapped/index.html";
+});
 
    
 
