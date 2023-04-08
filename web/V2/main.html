@@ -29,7 +29,7 @@
             <!-- Sampling Interval Slider and Apply Button -->
             <div class="slider-container">
                 <label for="sampling-interval">Sampling Minimum Delay (ms): </label>
-                <input type="range" id="sampling-interval" min="50" max="5000" step="50" value="1000">
+                <input type="range" id="sampling-interval" min="0" max="5000" step="50" value="1000">
                 <span id="interval-display">1000</span>
                 <button id="apply-sampling-interval">Apply</button>
             </div>
@@ -81,6 +81,8 @@
           <div class="calibration-point"></div>
           <div class="calibration-point"></div>
         </div>
+        <!--Message-->
+        <marquee id="marquee-message" behavior="scroll" direction="left" scrollamount="5"></marquee>
         <span id="close-button" class="close-button">&times;</span>
       </div>
 

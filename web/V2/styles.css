@@ -180,5 +180,15 @@ footer {
     background-color: green;
   }
 
+  /* Marquee styles */
+#marquee-message {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    font-size: 14px;
+    color: white;
+    white-space: nowrap;
+  }
   
   

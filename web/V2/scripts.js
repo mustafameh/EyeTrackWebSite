@@ -146,6 +146,9 @@ const startCalibration = document.getElementById("start-calibration");
 const calibrationPopup = document.getElementById("calibration-popup");
 const closeButton = document.getElementById("close-button");
 const calibrationPoints = document.querySelectorAll(".calibration-point");
+//Message
+const marqueeMessage = document.getElementById("marquee-message");
+marqueeMessage.textContent = "WebGazer.js contains an eye tracking model that self-calibrates by watching web visitors interact with the web page and trains a mapping between the features of the eye and positions on the screen";
 
 function showCalibrationPopup() {
   calibrationPopup.style.display = "block";
@@ -174,6 +177,7 @@ closeButton.addEventListener("click", hideCalibrationPopup, true);
 calibrationPoints.forEach(point => {
   point.addEventListener("click", toggleCalibrationPoint, true);
 });
+
 
   
 
