@@ -78,6 +78,7 @@ function initializeWebgazer() {
         // Event listeners for buttons
         beginTracking.addEventListener("click", () => {
             initializeWebgazer();
+            setButtonsDisabled(false);
         });
         
         beginRecording.addEventListener("click", () => {
@@ -178,9 +179,18 @@ calibrationPoints.forEach(point => {
   point.addEventListener("click", toggleCalibrationPoint, true);
 });
 
-
-  
-
+function setButtonsDisabled(disabled) {
+ 
+  beginRecording.disabled = disabled;
+  toggleVideoPreview.disabled = disabled;
+  pauseTracking.disabled = disabled;
+  resumeTracking.disabled = disabled;
+  save.disabled = disabled;
+  applySamplingIntervalButton.disabled = disabled;
+  applyModel.disabled = disabled;
+  startCalibration.disabled = disabled;
+}
+setButtonsDisabled(true);
 
 
 
