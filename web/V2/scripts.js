@@ -12,6 +12,8 @@ let startTime = 0;
 let baseTime = 0;
 let recordedData = [];
 
+let lastRecordedTime = 0;
+
 function initializeWebgazer() {
     webgazer.setGazeListener((data, elapsedTime) => {
         if (data == null) {
@@ -26,8 +28,9 @@ function initializeWebgazer() {
         coordinates.innerText = `X: ${x.toFixed(2)}, Y: ${y.toFixed(2)}`;
         timestamp.innerText = `Time: ${currentTime.toFixed(3)} s`;
 
-        if (recording) {
+        if (recording && (currentTime - lastRecordedTime >= 1)) {
             recordedData.push({x, y, time: currentTime});
+            lastRecordedTime = currentTime;
         }
 
         
