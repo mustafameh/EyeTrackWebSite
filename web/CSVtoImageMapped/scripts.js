@@ -75,6 +75,7 @@ function processCSV(csvFile) {
 
         // Render the smoothed image
         renderImage(smoothedData, "eye-tracking-canvas-smooth");
+
     };
     reader.readAsText(csvFile);
 }
@@ -112,5 +113,7 @@ function updateSmoothedImage() {
 }
 
 document.getElementById("apply-smoothing").addEventListener("click", updateSmoothedImage);
+
+
 
 

@@ -6,19 +6,24 @@
     <title>Eye Tracking</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://webgazer.cs.brown.edu/webgazer.js"></script>
+    
 </head>
 <body>
     <header>
         <h1>Webcam EyeTracking Webapp</h1>
-        <button id="visualize-data" type="button">Visualize Data</button>
-        
+        <!-- Visualize Data Button -->
+        <button id="visualize-data" type="button">Visualize Data</button>        
     </header>
     
     <div class="container">
         <div class="button-group">
-            <button id="begin-tracking">Begin Tracking</button>            
+            <!-- Begin Tracking Button -->
+            <button id="begin-tracking">Begin Tracking</button>
+            <!-- Begin Recording Button -->
             <button id="begin-recording">Begin Recording</button>
+            <!-- Toggle Video Preview Button -->
             <button id="toggle-video-preview">Toggle Video Preview</button>
+            <!-- Sampling Interval Slider and Apply Button -->
             <div class="slider-container">
                 <label for="sampling-interval">Sampling Minimum Delay (ms): </label>
                 <input type="range" id="sampling-interval" min="50" max="5000" step="50" value="1000">
@@ -27,12 +32,16 @@
             </div>
         </div>
         <div class="button-group">
+            <!-- Pause Tracking Button -->
             <button id="pause-tracking">Pause Tracking</button>
+            <!-- Resume Tracking Button -->
             <button id="resume-tracking">Resume Tracking</button>
         </div>
         <div class="button-group">
+            <!-- Save Button -->
             <button id="save">Save</button>
         </div>
+        <!-- Model Selection Dropdown and Apply Button -->
         <div class="model-selection">
             <select id="regression-model">
                 <option value="ridge">Ridge Regression</option>
@@ -40,7 +49,7 @@
             </select>
             <button id="apply-model">Apply</button>
         </div>
-
+        <!-- Timestamp and Coordinates Display -->
         <div class="info">
             <div id="timestamp" class="timestamp"></div>
             <div id="coordinates" class="coordinates"></div>
@@ -52,5 +61,6 @@
     <script src="scripts.js"></script>
 </body>
 </html>
+
 
 

@@ -1,3 +1,4 @@
+// Get elements from HTML
 const beginTracking = document.getElementById("begin-tracking");
 const beginRecording = document.getElementById("begin-recording");
 const toggleVideoPreview = document.getElementById("toggle-video-preview");
@@ -7,6 +8,7 @@ const save = document.getElementById("save");
 const timestamp = document.getElementById("timestamp");
 const coordinates = document.getElementById("coordinates");
 
+// Initialize variables
 let recording = false;
 let startTime = 0;
 let baseTime = 0;
@@ -15,6 +17,7 @@ let recordedData = [];
 let lastRecordedTime = 0;
 let samplingInterval = 1000;
 
+// Initialize Webgazer and set Gaze Listener
 function initializeWebgazer() {
     webgazer.setGazeListener((data, elapsedTime) => {
         if (data == null) {
@@ -26,103 +29,118 @@ function initializeWebgazer() {
 
         const currentTime = elapsedTime / 1000;
 
+        // Update coordinates and timestamp
         coordinates.innerText = `X: ${x.toFixed(2)}, Y: ${y.toFixed(2)}`;
-        timestamp.innerText = `Time: ${currentTime.toFixed(3)} s`;
+                // Update coordinates and timestamp
+                timestamp.innerText = `Time: ${currentTime.toFixed(3)} s`;
 
-        if (recording && (currentTime - lastRecordedTime >= samplingInterval / 1000)) {
-            recordedData.push({x, y, time: currentTime});
-            lastRecordedTime = currentTime;
+                // Record data if recording is active and time since last recording is greater than or equal to the sampling interval
+                if (recording && (currentTime - lastRecordedTime >= samplingInterval / 1000)) {
+                    recordedData.push({x, y, time: currentTime});
+                    lastRecordedTime = currentTime;
+                }
+                
+            }).begin();
         }
         
-    }).begin();
-}
-const samplingIntervalInput = document.getElementById("sampling-interval");
-const intervalDisplay = document.getElementById("interval-display");
-const applySamplingIntervalButton = document.getElementById("apply-sampling-interval");
+        // Get elements related to sampling interval
+        const samplingIntervalInput = document.getElementById("sampling-interval");
+        const intervalDisplay = document.getElementById("interval-display");
+        const applySamplingIntervalButton = document.getElementById("apply-sampling-interval");
+        
+        // Update interval display when input changes
+        samplingIntervalInput.addEventListener("input", () => {
+            intervalDisplay.textContent = samplingIntervalInput.value;
+        });
+        
+        // Update sampling interval when apply button is clicked
+        applySamplingIntervalButton.addEventListener("click", () => {
+            samplingInterval = parseInt(samplingIntervalInput.value);
+        });
+        
+        // Download recorded data as CSV
+        function downloadCSV() {
+            const header = "x,y,time\n";
+            let csvContent = recordedData.map(e => `${e.x},${e.y},${e.time}`).join("\n");
+            let blob = new Blob([header + csvContent], {type: "text/csv"});
+            let url = URL.createObjectURL(blob);
+        
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "eye_tracking_data.csv";
+            link.style.display = "none";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // Event listeners for buttons
+        beginTracking.addEventListener("click", () => {
+            initializeWebgazer();
+        });
+        
+        beginRecording.addEventListener("click", () => {
+            if (!recording) {
+                recording = true;
+                startTime = parseFloat((Date.now() / 1000).toFixed(3));
+                recordedData = [];
+                beginRecording.textContent = "Stop Recording";
+            } else {
+                recording = false;
+                beginRecording.textContent = "Begin Recording";
+            }
+        });
+        
+        toggleVideoPreview.addEventListener("click", () => {
+            const video = document.querySelector("video");
+            video.style.display = video.style.display === "none" ? "" : "none";
+        });
+        
+        pauseTracking.addEventListener("click", () => {
+            webgazer.pause();
+        });
+        
+        resumeTracking.addEventListener("click", () => {
+            webgazer.resume();
+        });
+        
+        save.addEventListener("click", () => {
+            if (recording) {
+                beginRecording.click();
+            }
+            downloadCSV();
+        });
+        
+        // Elements and event listener for regression model selection
+        const applyModel = document.getElementById("apply-model");
+        const regressionModelDropdown = document.getElementById("regression-model");
+        
+        // Set regression model in Webgazer
+        function setRegressionModel(model) {
+            switch (model) {
+              case "ridge":
+                webgazer.setRegression("ridge");
+                break;
+              case "weightedRidge":
+                webgazer.setRegression("weightedRidge");
+                break;
+              default:
+                console.error("Unknown regression model:", model);
+            }
+        }
+        
+        applyModel.addEventListener("click", () => {
+          const selectedModel = regressionModelDropdown.value;
+          setRegressionModel(selectedModel);
+        });
+        
+        // Event listener for visualize data button
+        document.getElementById("visualize-data").addEventListener("click", function () {
+            window.location.href = "file:///C:/Users/786me/Desktop/WebGaze/EyeTrackingWebsite/EyeTrackWebSite/web/CSVtoImageMapped/index.html";
+        });
+        ;
 
-samplingIntervalInput.addEventListener("input", () => {
-    intervalDisplay.textContent = samplingIntervalInput.value;
-});
 
-applySamplingIntervalButton.addEventListener("click", () => {
-    samplingInterval = parseInt(samplingIntervalInput.value);
-});
-
-function downloadCSV() {
-    const header = "x,y,time\n";
-    let csvContent = recordedData.map(e => `${e.x},${e.y},${e.time}`).join("\n");
-    let blob = new Blob([header + csvContent], {type: "text/csv"});
-    let url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "eye_tracking_data.csv";
-    link.style.display = "none";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-beginTracking.addEventListener("click", () => {
-    initializeWebgazer();
-});
-
-beginRecording.addEventListener("click", () => {
-    if (!recording) {
-        recording = true;
-        startTime = parseFloat((Date.now() / 1000).toFixed(3));
-        recordedData = [];
-        beginRecording.textContent = "Stop Recording";
-    } else {
-        recording = false;
-        beginRecording.textContent = "Begin Recording";
-    }
-});
-
-toggleVideoPreview.addEventListener("click", () => {
-    const video = document.querySelector("video");
-    video.style.display = video.style.display === "none" ? "" : "none";
-});
-
-pauseTracking.addEventListener("click", () => {
-    webgazer.pause();
-});
-
-resumeTracking.addEventListener("click", () => {
-    webgazer.resume();
-});
-
-save.addEventListener("click", () => {
-    if (recording) {
-        beginRecording.click();
-    }
-    downloadCSV();
-});
-
-const applyModel = document.getElementById("apply-model");
-const regressionModelDropdown = document.getElementById("regression-model");
-
-function setRegressionModel(model) {
-    switch (model) {
-      case "ridge":
-        webgazer.setRegression("ridge");
-        break;
-      case "weightedRidge":
-        webgazer.setRegression("weightedRidge");
-        break;
-      default:
-        console.error("Unknown regression model:", model);
-    }
-  }
-
-applyModel.addEventListener("click", () => {
-  const selectedModel = regressionModelDropdown.value;
-  setRegressionModel(selectedModel);
-});
-
-document.getElementById("visualize-data").addEventListener("click", function () {
-    window.location.href = "file:///C:/Users/786me/Desktop/WebGaze/EyeTrackingWebsite/EyeTrackWebSite/web/CSVtoImageMapped/index.html";
-});
 
    
 

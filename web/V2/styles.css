@@ -1,3 +1,4 @@
+/* General body styles */
 body {
     display: flex;
     color: white;
@@ -10,6 +11,7 @@ body {
     background-attachment: fixed;
 }
 
+/* Add a blurred background */
 body::before {
     content: '';
     position: fixed;
@@ -22,6 +24,7 @@ body::before {
     z-index: -1;
 }
 
+/* Header styles */
 header {
     display: flex;
     justify-content: space-between;
@@ -31,11 +34,13 @@ header {
     backdrop-filter: blur(10px);
 }
 
+/* Header title styles */
 h1 {
     font-size: 24px;
     font-weight: bold;
 }
 
+/* Button styles */
 button {
     background-color: #4caf50;
     color: #ffffff;
@@ -51,10 +56,12 @@ button {
     margin-bottom: 8px;
 }
 
+/* Button hover styles */
 button:hover {
     background-color: #3e8e41;
 }
 
+/* Container styles */
 .container {
     display: flex;
     flex-direction: column;
@@ -63,6 +70,7 @@ button:hover {
     flex-grow: 1;
 }
 
+/* Button group styles */
 .button-group {
     display: flex;
     flex-wrap: wrap;
@@ -70,12 +78,14 @@ button:hover {
     margin-bottom: 1rem;
 }
 
+/* Model selection styles */
 .model-selection {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
 }
 
+/* Timestamp and coordinates styles */
 .info {
     position: fixed;
     bottom: 10px;
@@ -89,6 +99,7 @@ button:hover {
     font-weight: bold;
 }
 
+/* Footer styles */
 footer {
     background-color: #1c1c1c;
     color: #aaaaaa;
@@ -97,6 +108,7 @@ footer {
     font-size: 14px;
 }
 
+/* Slider container styles */
 .slider-container {
     display: flex;
     align-items: center;
