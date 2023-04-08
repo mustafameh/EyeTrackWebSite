@@ -41,6 +41,7 @@ function initializeWebgazer() {
                 }
                 
             }).begin();
+
         }
         
         // Get elements related to sampling interval
@@ -139,6 +140,49 @@ function initializeWebgazer() {
             window.location.href = "file:///C:/Users/786me/Desktop/WebGaze/EyeTrackingWebsite/EyeTrackWebSite/web/CSVtoImageMapped/index.html";
         });
         ;
+
+// Calibration
+const startCalibration = document.getElementById("start-calibration");
+const calibrationPopup = document.getElementById("calibration-popup");
+const closeButton = document.getElementById("close-button");
+const calibrationPoints = document.querySelectorAll(".calibration-point");
+
+function showCalibrationPopup() {
+  calibrationPopup.style.display = "block";
+}
+
+function hideCalibrationPopup() {
+  calibrationPopup.style.display = "none";
+}
+
+function toggleCalibrationPoint(event) {
+    const point = event.target;
+    if (point.classList.contains("selected")) {
+      point.classList.remove("selected");
+      point.classList.add("green");
+    } else if (point.classList.contains("green")) {
+      point.classList.remove("green");
+    } else {
+      point.classList.add("selected");
+    }
+  }
+  
+
+startCalibration.addEventListener("click", showCalibrationPopup, true);
+closeButton.addEventListener("click", hideCalibrationPopup, true);
+
+calibrationPoints.forEach(point => {
+  point.addEventListener("click", toggleCalibrationPoint, true);
+});
+
+  
+
+
+
+
+
+
+  
 
 
 

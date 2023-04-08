@@ -16,6 +16,9 @@
     </header>
     
     <div class="container">
+
+        
+
         <div class="button-group">
             <!-- Begin Tracking Button -->
             <button id="begin-tracking">Begin Tracking</button>
@@ -55,11 +58,39 @@
             <div id="coordinates" class="coordinates"></div>
         </div>
     </div>
-    <footer>
+    
+    
+    <button id="start-calibration">Calibrate</button>
+    <div id="calibration-popup" class="calibration-popup">
+        <div class="calibration-grid" id="calibration-grid">
+          <!-- Add 16 calibration points -->
+          <div class="calibration-point"></div>
+          <div class="calibration-point"></div>
+          <div class="calibration-point"></div>
+          <div class="calibration-point"></div>
+          <div class="calibration-point"></div>
+          <div class="calibration-point"></div>
+          <div class="calibration-point"></div>
+          <div class="calibration-point"></div>
+          <div class="calibration-point"></div>
+          <div class="calibration-point"></div>
+          <div class="calibration-point"></div>
+          <div class="calibration-point"></div>
+          <div class="calibration-point"></div>
+          <div class="calibration-point"></div>
+          <div class="calibration-point"></div>
+          <div class="calibration-point"></div>
+        </div>
+        <span id="close-button" class="close-button">&times;</span>
+      </div>
+
+      <script src="scripts.js"></script>
+
+      <footer>
         Designed by Mustafa Mehmood, April 2023
     </footer>
-    <script src="scripts.js"></script>
 </body>
+
 </html>
 
 
