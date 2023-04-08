@@ -179,8 +179,8 @@ calibrationPoints.forEach(point => {
   point.addEventListener("click", toggleCalibrationPoint, true);
 });
 
+//disabling the buttons unless Begin Tracking is clicked
 function setButtonsDisabled(disabled) {
- 
   beginRecording.disabled = disabled;
   toggleVideoPreview.disabled = disabled;
   pauseTracking.disabled = disabled;
@@ -191,7 +191,6 @@ function setButtonsDisabled(disabled) {
   startCalibration.disabled = disabled;
 }
 setButtonsDisabled(true);
-
 
 
 

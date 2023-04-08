@@ -23,26 +23,26 @@
             <!-- Begin Tracking Button -->
             <button id="begin-tracking">Begin Tracking</button>
             <!-- Begin Recording Button -->
-            <button id="begin-recording">Begin Recording</button>
+            <button id="begin-recording" class="control-button">Begin Recording</button>
             <!-- Toggle Video Preview Button -->
-            <button id="toggle-video-preview">Toggle Video Preview</button>
+            <button id="toggle-video-preview" class="control-button">Toggle Video Preview</button>
             <!-- Sampling Interval Slider and Apply Button -->
             <div class="slider-container">
                 <label for="sampling-interval">Sampling Minimum Delay (ms): </label>
                 <input type="range" id="sampling-interval" min="0" max="5000" step="50" value="1000">
                 <span id="interval-display">1000</span>
-                <button id="apply-sampling-interval">Apply</button>
+                <button id="apply-sampling-interval" class="control-button">Apply</button>
             </div>
         </div>
         <div class="button-group">
             <!-- Pause Tracking Button -->
-            <button id="pause-tracking">Pause Tracking</button>
+            <button id="pause-tracking" class="control-button">Pause Tracking</button>
             <!-- Resume Tracking Button -->
-            <button id="resume-tracking">Resume Tracking</button>
+            <button id="resume-tracking" class="control-button">Resume Tracking</button>
         </div>
         <div class="button-group">
             <!-- Save Button -->
-            <button id="save">Save</button>
+            <button id="save" class="control-button">Save</button>
         </div>
         <!-- Model Selection Dropdown and Apply Button -->
         <div class="model-selection">
@@ -50,7 +50,7 @@
                 <option value="ridge">Ridge Regression</option>
                 <option value="weightedRidge">Weighted Ridge Regression</option>
             </select>
-            <button id="apply-model">Apply</button>
+            <button id="apply-model" class="control-button">Apply</button>
         </div>
         <!-- Timestamp and Coordinates Display -->
         <div class="info">
@@ -60,7 +60,7 @@
     </div>
     
     
-    <button id="start-calibration">Calibrate</button>
+    <button id="start-calibration" class="control-button">Calibrate</button>
     <div id="calibration-popup" class="calibration-popup">
         <div class="calibration-grid" id="calibration-grid">
           <!-- Add 16 calibration points -->
