@@ -54,6 +54,9 @@ imageInput.addEventListener("change", (event) => {
 
 // Handle prediction
 predictBtn.addEventListener("click", () => {
+  const class0Name = document.getElementById("class-0-name").value || "Class 0";
+  const class1Name = document.getElementById("class-1-name").value || "Class 1";
+
   const formData = new FormData();
   formData.append("image", imageInput.files[0]);
   formData.append("model", modelSelect.value);
@@ -64,6 +67,6 @@ predictBtn.addEventListener("click", () => {
   }).then(response => response.json())
     .then(result => {
       resultsDisplay.classList.remove("d-none");
-      predictionResult.textContent = `Prediction: ${result.prediction}`;
+      predictionResult.textContent = `Prediction: ${result.prediction === "Class 1" ? class1Name : class0Name}`;
     });
 });
