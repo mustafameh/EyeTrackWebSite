@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Learning Binary Image Classification</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Deep Learning Binary Image Classification</h1>
+        <!-- Model Selection -->
+        <div id="model-selection">
+            <h2>Select a Model</h2>
+            <select id="model-select" class="form-control">
+                <!-- Options will be populated by JavaScript -->
+            </select>
+            <button id="upload-model-btn" class="btn btn-secondary mt-2">Upload Your Own Model</button>
+            <input type="file" id="model-upload" class="d-none">
+            <!-- Class Names -->
+            <div id="class-names" class="mt-2">
+                <label for="class-0-name">Class 0 Name:</label>
+                <input type="text" id="class-0-name" class="form-control" placeholder="Class 0 Name">
+                <label for="class-1-name" class="mt-2">Class 1 Name:</label>
+                <input type="text" id="class-1-name" class="form-control" placeholder="Class 1 Name">
+            </div>
+        </div>
+        <!-- Image Upload -->
+        <div id="image-upload" class="mt-4">
+            <h2>Upload an Image</h2>
+            <input type="file" id="image-input" class="form-control">
+            <img id="uploaded-image" src="" alt="Uploaded Image" class="img-thumbnail mt-2 d-none">
+        </div>
+        <!-- Run Prediction -->
+        <div id="run-prediction" class="mt-4">
+            <button id="predict-btn" class="btn btn-primary">Run Prediction</button>
+        </div>
+        <!-- Results Display -->
+        <div id="results-display" class="mt-4 d-none">
+            <h2>Results</h2>
+            <p id="prediction-result"></p>
+        </div>
+        <!-- Retrain Model -->
+<div id="retrain-model" class="mt-4">
+    <h2>Retrain Model</h2>
+    <label for="epochs">Number of Epochs:</label>
+    <input type="number" id="epochs" class="form-control" min="1" value="10">
+    <label for="retrain-model-select" class="mt-2">Select Model to Retrain:</label>
+    <select id="retrain-model-select" class="form-control">
+        <!-- Options will be populated by JavaScript -->
+    </select>
+    <button id="choose-dataset-btn" class="btn btn-secondary mt-2">Choose Dataset Directory</button>
+    <input type="file" id="dataset-folder" class="d-none" webkitdirectory>
+    <p id="chosen-directory" class="mt-2"></p>
+    <button id="start-training-btn" class="btn btn-primary mt-2">Start Training</button>
+    <div id="training-info" class="mt-4 d-none">
+        <h2>Training Info</h2>
+        <p id="current-epoch"></p>
+        <p id="training-accuracy"></p>
+        <p id="validation-accuracy"></p>
+        <p id="training-loss"></p>
+        <p id="validation-loss"></p>
+    </div>
+</div>
+
+    </div>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
+

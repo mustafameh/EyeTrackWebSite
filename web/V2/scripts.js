@@ -17,6 +17,7 @@ let recordedData = [];
 let lastRecordedTime = 0;
 let samplingInterval = 1000;
 
+
 // Initialize Webgazer and set Gaze Listener
 function initializeWebgazer() {
     webgazer.setGazeListener((data, elapsedTime) => {
