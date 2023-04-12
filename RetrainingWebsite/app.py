@@ -109,16 +109,36 @@ def clean_upload_folder():
             print(f'Failed to delete {file_path}. Reason: {e}')
 
 
-# new routine For downloading the retrained model 
+# new routine For downloading the retrained model and then delete it from local mempry after downloading using threading
 from flask import send_from_directory
+from flask import after_this_request
+
+import threading
+import time
+
+def delete_file(filepath):
+    while True:
+        try:
+            os.remove(filepath)
+            print(f"Local copy of {filepath} deleted.")
+            break
+        except Exception as e:
+            print(f"Failed to delete local copy of {filepath}. Retrying...")
+            time.sleep(1)
 
 @app.route('/download', methods=['GET'])
 def download():
     try:
-        return send_from_directory(directory='', path='model_retrained.h5', as_attachment=True)
+        response = send_from_directory(directory='', path='model_retrained.h5', as_attachment=True)
+
+        t = threading.Thread(target=delete_file, args=('model_retrained.h5',))
+        t.start()
+
+        return response
     except Exception as e:
         print(f"Failed to download retrained model. Reason: {e}")
         return redirect(url_for('home'))
+
 
 
 def file_exists(filepath):
@@ -133,4 +153,3 @@ app.jinja_env.globals['file_exists'] = file_exists
 if __name__ == '__main__':
 
     app.run(debug=True, use_reloader=False)
-
