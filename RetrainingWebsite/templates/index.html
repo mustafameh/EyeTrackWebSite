@@ -11,7 +11,13 @@
         <h4>Select Dataset: </h4>
         <form action="/" method="post" enctype="multipart/form-data">
             <input type="file" name="dataset" accept=".zip">
-            <button type="submit">Upload</button>           
+            <button type="submit">Upload</button>
+            <label for="model">Select Model:</label>
+            <select name="model" required>
+             {% for model in models %}
+                <option value="{{ model }}">{{ model }}</option>
+                {% endfor %}
+                    </select>           
         </form>
         <!-- Display flashed messages -->
         {% with messages = get_flashed_messages() %}
@@ -29,19 +35,13 @@
             <button type="submit">Start Training</button>
         </form>
         {% if file_exists("model_retrained.h5") %}
-            <a href="{{ url_for('download') }}" class="button">Download Retrained Model</a>
+            <a href="{{ url_for('download') }}" class="button" id="download-button">Download Retrained Model</a>
         {% endif %}
     </div>
+    
 </body>
-<script>
-    document.addEventListener('click', function (event) {
-        if (event.target.tagName === 'A' && event.target.href) {
-            setTimeout(function () {
-                location.reload();
-            }, 5000); // Set a delay (e.g., 5000ms) to give the download and file deletion enough time to complete
-        }
-    }, false);
-</script>
+
+<script src="{{ url_for('static', filename='main.js') }}"></script>
 </html>
 
 

@@ -6,15 +6,17 @@ from PIL import Image
 import numpy as np
 import os
 import shutil
+import glob
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
-app.secret_key = 'your-secret-key' #secret key
+app.secret_key = 'secret-key' #secret key
 
 
 # Route for uploading dataset and training
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    models = list_models()  # Get the list of models
     if request.method == 'POST':
         dataset = request.files.get('dataset')
         if dataset:
@@ -23,25 +25,31 @@ def home():
 
             dataset.save(os.path.join(app.config['UPLOAD_FOLDER'], 'dataset.zip'))
             flash("Zip file successfully uploaded.")
-        
+
+        # Get the selected model from the form
+        selected_model = request.form.get('model')
         epochs = request.form.get('epochs')
+        
         if epochs:
             # Check if the dataset file exists before calling retrain_model
             dataset_path = os.path.join(app.config['UPLOAD_FOLDER'], 'dataset.zip')
             if os.path.isfile(dataset_path):
-                retrain_model(int(epochs))
+                
+                retrain_model(selected_model, int(epochs))
+                
             else:
                 flash("Dataset not found. Please upload the dataset before Starting Training.")
     
-    return render_template('index.html')
+    return render_template('index.html', models=models)
 
      
 #Function for retraining 
 
-def retrain_model(epochs):
+def retrain_model(model_filename, epochs):
     # Load the pretrained model
-    model = load_model('model.h5')
+    model = load_model(model_filename)
 
+    
     # Extract the dataset
     import zipfile
     with zipfile.ZipFile(os.path.join(app.config['UPLOAD_FOLDER'], 'dataset.zip'), 'r') as zip_ref:
@@ -96,6 +104,9 @@ def retrain_model(epochs):
     # Call clean_upload_folder() after the training process is complete
     clean_upload_folder()
 
+    # Re-enable the "Start Training" button and update the flashed message
+    flash("Training has finished. You can now download the retrained model.")
+
 def clean_upload_folder():
     folder = app.config['UPLOAD_FOLDER']
     for filename in os.listdir(folder):
@@ -111,7 +122,6 @@ def clean_upload_folder():
 
 # new routine For downloading the retrained model and then delete it from local mempry after downloading using threading
 from flask import send_from_directory
-from flask import after_this_request
 
 import threading
 import time
@@ -145,11 +155,10 @@ def file_exists(filepath):
     return os.path.isfile(filepath)
 
 
-
-
-
+#list all the .h5 files in the current directory
+def list_models():
+    return [os.path.basename(model) for model in glob.glob("*.h5")]
 
 app.jinja_env.globals['file_exists'] = file_exists
 if __name__ == '__main__':
-
     app.run(debug=True, use_reloader=False)
