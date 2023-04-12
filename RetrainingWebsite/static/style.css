@@ -68,3 +68,17 @@ button {
 button:hover {
     background-color: #3e8e41;
 }
+
+/*flashed messages */
+ul.flashes {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+ul.flashes li {
+    background-color: #4caf50;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+}

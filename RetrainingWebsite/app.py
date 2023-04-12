@@ -5,9 +5,11 @@ from keras.preprocessing.image import ImageDataGenerator
 from PIL import Image
 import numpy as np
 import os
+import shutil
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
+app.secret_key = 'your-secret-key' #secret key
 
 
 # Route for uploading dataset and training
@@ -20,10 +22,16 @@ def home():
             os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
             dataset.save(os.path.join(app.config['UPLOAD_FOLDER'], 'dataset.zip'))
+            flash("Zip file successfully uploaded.")
         
         epochs = request.form.get('epochs')
         if epochs:
-            retrain_model(int(epochs))
+            # Check if the dataset file exists before calling retrain_model
+            dataset_path = os.path.join(app.config['UPLOAD_FOLDER'], 'dataset.zip')
+            if os.path.isfile(dataset_path):
+                retrain_model(int(epochs))
+            else:
+                flash("Dataset not found. Please upload the dataset before Staring Training.")
     
     return render_template('index.html')
 
@@ -84,6 +92,23 @@ def retrain_model(epochs):
     # Display training accuracy, epoch number, and loss
     for epoch, acc, loss in zip(range(1, epochs + 1), history.history['accuracy'], history.history['loss']):
         print(f"Epoch: {epoch}, Accuracy: {acc:.2f}, Loss: {loss:.2f}")
+
+    # Call clean_upload_folder() after the training process is complete
+    clean_upload_folder()
+
+def clean_upload_folder():
+    folder = app.config['UPLOAD_FOLDER']
+    for filename in os.listdir(folder):
+        file_path = os.path.join(folder, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print(f'Failed to delete {file_path}. Reason: {e}')
+
+
 
 if __name__ == '__main__':
 
