@@ -9,28 +9,24 @@ import os
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 
-#route for uploading dataset
+
+# Route for uploading dataset and training
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
         dataset = request.files.get('dataset')
         if dataset:
-
             # Create the uploads directory if it doesn't exist
             os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
             dataset.save(os.path.join(app.config['UPLOAD_FOLDER'], 'dataset.zip'))
-            return redirect(url_for('train'))
+        
+        epochs = request.form.get('epochs')
+        if epochs:
+            retrain_model(int(epochs))
+    
     return render_template('index.html')
 
-#Route for training 
-@app.route('/train', methods=['GET', 'POST'])
-def train():
-    if request.method == 'POST':
-        epochs = int(request.form.get('epochs'))
-        retrain_model(epochs)
-        return redirect(url_for('home'))
-    return render_template('train.html')
      
 #Function for retraining 
 
@@ -89,6 +85,7 @@ def retrain_model(epochs):
     for epoch, acc, loss in zip(range(1, epochs + 1), history.history['accuracy'], history.history['loss']):
         print(f"Epoch: {epoch}, Accuracy: {acc:.2f}, Loss: {loss:.2f}")
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
+
+    app.run(debug=True, use_reloader=False)
+

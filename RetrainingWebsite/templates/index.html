@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Model Retraining</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>Upload Dataset</h1>
@@ -9,6 +10,14 @@
         <input type="file" name="dataset" accept=".zip">
         <button type="submit">Upload</button>
     </form>
+
+    <h1>Train Model</h1>
+    <form action="/" method="post">
+        <label for="epochs">Number of epochs:</label>
+        <input type="number" name="epochs" min="1" required>
+        <button type="submit">Start Training</button>
+    </form>
 </body>
 </html>
+
 
