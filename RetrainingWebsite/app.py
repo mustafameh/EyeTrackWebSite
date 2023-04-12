@@ -31,7 +31,7 @@ def home():
             if os.path.isfile(dataset_path):
                 retrain_model(int(epochs))
             else:
-                flash("Dataset not found. Please upload the dataset before Staring Training.")
+                flash("Dataset not found. Please upload the dataset before Starting Training.")
     
     return render_template('index.html')
 
@@ -109,7 +109,27 @@ def clean_upload_folder():
             print(f'Failed to delete {file_path}. Reason: {e}')
 
 
+# new routine For downloading the retrained model 
+from flask import send_from_directory
 
+@app.route('/download', methods=['GET'])
+def download():
+    try:
+        return send_from_directory(directory='', path='model_retrained.h5', as_attachment=True)
+    except Exception as e:
+        print(f"Failed to download retrained model. Reason: {e}")
+        return redirect(url_for('home'))
+
+
+def file_exists(filepath):
+    return os.path.isfile(filepath)
+
+
+
+
+
+
+app.jinja_env.globals['file_exists'] = file_exists
 if __name__ == '__main__':
 
     app.run(debug=True, use_reloader=False)

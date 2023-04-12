@@ -13,7 +13,7 @@
             <input type="file" name="dataset" accept=".zip">
             <button type="submit">Upload</button>           
         </form>
-        <!-- Add this block to display flashed messages -->
+        <!-- Display flashed messages -->
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul class="flashes">
@@ -23,13 +23,14 @@
         </ul>
         {% endif %}
         {% endwith %}
-
-        
         <form action="/" method="post">
             <label for="epochs">Number of epochs:</label>
-            <input type="number" name="epochs" min="1" required>
+            <input type="number" name="epochs" min="1" value="1" required> <!-- Default epoch value 1 -->
             <button type="submit">Start Training</button>
         </form>
+        {% if file_exists("model_retrained.h5") %}
+            <a href="{{ url_for('download') }}" class="button">Download Retrained Model</a>
+        {% endif %}
     </div>
 </body>
 </html>
