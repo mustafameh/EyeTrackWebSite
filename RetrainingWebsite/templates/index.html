@@ -7,12 +7,16 @@
 <body>
     <div class="container">
         <h1>Retrain Model</h1>
-        <form action="/" method="post" enctype="multipart/form-data">
+        
+        <form action="/upload" method="post" enctype="multipart/form-data">
             <h4>Select Dataset: </h4>
             <label for="dataset" class="custom-file-upload">Choose File</label>
             <input type="file" name="dataset" id="dataset" accept=".zip" onchange="displayFileName(this)">
             <span class="file-name-display" id="file-name-display"></span>
-            
+            <button type="submit">Upload Dataset</button>
+        </form>
+        
+        <form action="/" method="post">
             <h4>Select Model: </h4>
             <select name="model" required>
                 {% for model in models %}
@@ -23,18 +27,20 @@
             <label for="epochs">Number of epochs:</label>
             <input type="number" name="epochs" min="1" value="1" required> <!-- Default epoch value 1 -->
             
+            <!-- Display flashed messages -->
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+            
             <button type="submit">Start Training</button>
         </form>
-        <!-- Display flashed messages -->
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul class="flashes">
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
+        
         {% if file_exists("model_retrained.h5") %}
             <a href="{{ url_for('download') }}" class="button" id="download-button">Download Retrained Model</a>
         {% endif %}
@@ -42,5 +48,6 @@
 </body>
 <script src="{{ url_for('static', filename='main.js') }}"></script>
 </html>
+
 
 

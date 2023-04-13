@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
 import tensorflow as tf
 from keras.models import load_model
 from keras.preprocessing.image import ImageDataGenerator
@@ -8,40 +8,39 @@ import os
 import shutil
 import glob
 
-
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
-app.secret_key = 'secret-key' #secret key
+app.secret_key = 'secret-key'
 
+# Route for uploading dataset
+@app.route("/upload", methods=["POST"])
+def upload_dataset():
+    if request.method == "POST":
+        dataset = request.files.get('dataset')
+        if dataset:
+            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+            dataset.save(os.path.join(app.config['UPLOAD_FOLDER'], 'dataset.zip'))
+            flash("Zip file successfully uploaded.")
+        return redirect(url_for("home"))
 
-# Route for uploading dataset and training
+# Route for handling model selection and training
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    # List all .h5 files
     models = [os.path.basename(f) for f in glob.glob('*.h5')]
 
     if request.method == 'POST':
-        dataset = request.files.get('dataset')
-        if dataset:
-            # Create the uploads directory if it doesn't exist
-            os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-
-            dataset.save(os.path.join(app.config['UPLOAD_FOLDER'], 'dataset.zip'))
-            flash("Zip file successfully uploaded.")
-
         epochs = request.form.get('epochs')
+        model_name = request.form.get('model')
         
-        if epochs:
-            # Check if the dataset file exists before calling retrain_model
+        if epochs and model_name:
             dataset_path = os.path.join(app.config['UPLOAD_FOLDER'], 'dataset.zip')
             if os.path.isfile(dataset_path):
-                
-                retrain_model(int(epochs), request.form.get('model'))
-                
+                retrain_model(int(epochs), model_name)
             else:
                 flash("Dataset not found. Please upload the dataset before Starting Training.")
     
     return render_template('index.html', models=models)
+
 
      
 #Function for retraining 
