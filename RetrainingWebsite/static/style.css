@@ -48,9 +48,19 @@ label {
 
 input[type="number"] {
     margin-top: 0.25rem;
+    width: 100%;
+    padding: 0.5rem;
+    border: 2px solid #4caf50;
+    border-radius: 0.25rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
 }
 
-button {
+input[type="file"] {
+    display: none;
+}
+
+button[type="submit"], .custom-file-upload {
     background-color: #4caf50;
     color: #ffffff;
     font-size: 1rem;
@@ -65,8 +75,20 @@ button {
     margin-bottom: 8px;
 }
 
-button:hover {
+button[type="submit"]:hover, .custom-file-upload:hover {
     background-color: #3e8e41;
+}
+
+select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 2px solid #4caf50;
+    border-radius: 0.25rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
 /*flashed messages */
@@ -100,4 +122,35 @@ a.button {
 
 a.button:hover {
     background-color: #3e8e41;
+}
+
+/* Custom file input button style */
+label.custom-file-upload {
+    display: inline-block;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    background-color: #4caf50;
+    color: #ffffff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+label.custom-file-upload:hover {
+    background-color: #3e8e41;
+}
+
+/* File input name display */
+.file-name-display {
+    display: inline-block;
+    font-size: 0.9rem;
+    padding: 0.25rem 0.5rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
 }

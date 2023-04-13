@@ -7,3 +7,13 @@ document.addEventListener('click', function (event) {
     }
 }, false);
 
+
+    function displayFileName(input) {
+        const fileNameDisplay = document.getElementById('file-name-display');
+        if (input.files && input.files[0]) {
+            fileNameDisplay.textContent = input.files[0].name;
+        } else {
+            fileNameDisplay.textContent = '';
+        }
+    }
+

@@ -8,6 +8,7 @@ import os
 import shutil
 import glob
 
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.secret_key = 'secret-key' #secret key
@@ -16,7 +17,9 @@ app.secret_key = 'secret-key' #secret key
 # Route for uploading dataset and training
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    models = list_models()  # Get the list of models
+    # List all .h5 files
+    models = [os.path.basename(f) for f in glob.glob('*.h5')]
+
     if request.method == 'POST':
         dataset = request.files.get('dataset')
         if dataset:
@@ -26,8 +29,6 @@ def home():
             dataset.save(os.path.join(app.config['UPLOAD_FOLDER'], 'dataset.zip'))
             flash("Zip file successfully uploaded.")
 
-        # Get the selected model from the form
-        selected_model = request.form.get('model')
         epochs = request.form.get('epochs')
         
         if epochs:
@@ -35,7 +36,7 @@ def home():
             dataset_path = os.path.join(app.config['UPLOAD_FOLDER'], 'dataset.zip')
             if os.path.isfile(dataset_path):
                 
-                retrain_model(selected_model, int(epochs))
+                retrain_model(int(epochs), request.form.get('model'))
                 
             else:
                 flash("Dataset not found. Please upload the dataset before Starting Training.")
@@ -45,8 +46,8 @@ def home():
      
 #Function for retraining 
 
-def retrain_model(model_filename, epochs):
-    # Load the pretrained model
+def retrain_model(epochs, model_filename):
+    # Load the selected model
     model = load_model(model_filename)
 
     
@@ -155,10 +156,7 @@ def file_exists(filepath):
     return os.path.isfile(filepath)
 
 
-#list all the .h5 files in the current directory
-def list_models():
-    return [os.path.basename(model) for model in glob.glob("*.h5")]
-
 app.jinja_env.globals['file_exists'] = file_exists
 if __name__ == '__main__':
+
     app.run(debug=True, use_reloader=False)
